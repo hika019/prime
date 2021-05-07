@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from kuku_list import get_kuku_list
-import math
+import math, time
 
 def r_shift(n, i):
     tmp = 10**i
@@ -15,8 +15,8 @@ def list_to_int(array):
         ans += array[i] * 10**i    
     return ans
 
-p = 701
-q = 941
+p = 2147483647
+q = 20211109
 
 n_ori = p*q
 
@@ -30,39 +30,43 @@ math.sqrt(n_ori)
 
 a = 0
 b = 0
-
-
-n = r_shift(n_ori - a*b, 0)
-##1桁目
+n = n_ori
 tmp_list_1 = kuku_list[get_last(n)]
-for i in range(len(tmp_list_1)):
-    a = tmp_list_1[i][0]
-    b = tmp_list_1[i][1]
-    
-    if a*b == n:
-        flag = True
+
+sqrt= int(math.sqrt(n))
+
+start = time.time()
+for i in range(1, int(sqrt/10)):
+    for j in range(len(tmp_list_1)):
+        
+        a= i*10 + tmp_list_1[j][0]
+        b= i*10 + tmp_list_1[j][1]
         
         
-    for j in range(1, int(math.sqrt(n_ori/10))):
-        if n % (a + j*10) == 0 :
-            a += j*10
+        if n%a == 0:
             print(a)
             print(int(n/a))
-            flag = True
+            flag= True
             break
-            
-        if n % (b + j*10) == 0:
-            b += j*10
-            flag = True
+        
+        if n%b == 0:
             print(int(n/b))
             print(b)
+            flag = True
             break
-    
     if flag:
+        print(time.time()-start)
         break
 
-        
-        
+
+print("")
+start = time.time()
+for i in range(3, int(math.sqrt(n_ori)), 2):
+    if n_ori % i ==0:
+        print(i)
+        print(int(n_ori/i))
+        print(time.time() - start)
+        break
     
     
     
